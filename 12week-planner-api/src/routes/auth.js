@@ -35,12 +35,15 @@ passport.use(new GoogleStrategy({
         [googleId, email, name, avatarUrl, status, isAdmin]
       );
     } else {
-      // 已存在：更新登入資訊
+      // 已存在：更新登入資訊，同時確保 ADMIN_EMAIL 帳號永遠有 is_admin = true
+      const isAdmin = email === process.env.ADMIN_EMAIL;
       result = await db.query(
         `UPDATE users SET login_count = login_count + 1, last_login_at = NOW(),
-         name = $2, avatar_url = $3
+         name = $2, avatar_url = $3,
+         is_admin = CASE WHEN $4 THEN true ELSE is_admin END,
+         status = CASE WHEN $4 AND status = 'pending' THEN 'approved' ELSE status END
          WHERE google_id = $1 RETURNING *`,
-        [googleId, name, avatarUrl]
+        [googleId, name, avatarUrl, isAdmin]
       );
     }
 
