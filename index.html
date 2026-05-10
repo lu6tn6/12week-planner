@@ -367,6 +367,24 @@
   </div>
 </div>
 
+<!-- MODAL 使用者 -->
+<div class="modal-bg" id="modal-user">
+  <div class="modal" style="padding-bottom:24px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+      <img id="modal-user-avatar" src="" style="width:48px;height:48px;border-radius:50%;object-fit:cover;display:none" referrerpolicy="no-referrer">
+      <span id="modal-user-avatar-fb" style="font-size:32px">👤</span>
+      <div>
+        <div id="modal-user-name" style="font-weight:700;font-size:15px"></div>
+        <div id="modal-user-email" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text2);margin-top:2px"></div>
+      </div>
+    </div>
+    <div class="modal-actions" style="flex-direction:column;gap:8px">
+      <button class="btn-ghost" onclick="closeModal('modal-user')" style="text-align:center">關閉</button>
+      <button onclick="closeModal('modal-user');doLogout()" style="background:none;border:1px solid #f87171;color:#f87171;border-radius:8px;padding:10px 16px;font-family:'DM Mono',monospace;font-size:12px;cursor:pointer;width:100%">登出</button>
+    </div>
+  </div>
+</div>
+
 <!-- SYNC STATUS -->
 <div id="sync-status"></div>
 
@@ -376,7 +394,11 @@
     <div class="label">本週追蹤</div>
     <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
       <h1 id="today-title" style="flex:1">第 1 週行動</h1>
-      <button id="plan-switcher-btn" onclick="openPlanSwitcher()" style="background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text2);cursor:pointer;white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis" id="plan-name-btn">計畫名稱</button>
+      <button id="plan-switcher-btn" onclick="openPlanSwitcher()" style="background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text2);cursor:pointer;white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis">計畫名稱</button>
+      <button id="user-avatar-btn" onclick="document.getElementById('modal-user').classList.add('open')" style="width:32px;height:32px;border-radius:50%;border:1px solid var(--border);background:var(--surface2);cursor:pointer;padding:0;overflow:hidden;flex-shrink:0">
+        <img id="user-avatar-img" src="" style="width:100%;height:100%;object-fit:cover;display:none" referrerpolicy="no-referrer">
+        <span id="user-avatar-fallback" style="font-size:16px;line-height:32px;display:block">👤</span>
+      </button>
     </div>
   </div>
 
@@ -1036,7 +1058,19 @@ function showAppScreen(){
   renderToday();
   // 管理員才顯示後台按鈕
   if(currentUser?.is_admin){
-    document.getElementById('nav-admin-btn').style.display='';
+    document.getElementById('nav-admin-btn').style.display='flex';
+  }
+  // 更新右上角頭像
+  if(currentUser){
+    const av=currentUser.avatar_url||'';
+    const img=document.getElementById('user-avatar-img');
+    const fb=document.getElementById('user-avatar-fallback');
+    if(av){img.src=av;img.style.display='block';fb.style.display='none';}
+    document.getElementById('modal-user-name').textContent=currentUser.name||'';
+    document.getElementById('modal-user-email').textContent=currentUser.email||'';
+    const mav=document.getElementById('modal-user-avatar');
+    const mfb=document.getElementById('modal-user-avatar-fb');
+    if(av){mav.src=av;mav.style.display='block';mfb.style.display='none';}
   }
 }
 
