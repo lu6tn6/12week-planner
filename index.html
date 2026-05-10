@@ -297,6 +297,36 @@
   #sync-status.synced{color:var(--success);border-color:var(--success);}
   #sync-status.error{color:#f87171;border-color:#f87171;}
   @media(min-width:768px){#sync-status{bottom:16px;right:24px;}}
+
+  /* ADMIN */
+  .admin-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px;}
+  .admin-stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;text-align:center;}
+  .admin-stat-num{font-family:'DM Mono',monospace;font-size:28px;font-weight:700;color:var(--accent);}
+  .admin-stat-num.warn{color:var(--warn);}
+  .admin-stat-num.success{color:var(--success);}
+  .admin-stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--text2);margin-top:4px;text-transform:uppercase;letter-spacing:1px;}
+  .admin-user-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;margin-bottom:10px;}
+  .admin-user-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .admin-user-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;background:var(--surface2);}
+  .admin-user-avatar-placeholder{width:36px;height:36px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+  .admin-user-info{flex:1;min-width:0;}
+  .admin-user-name{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .admin-user-email{font-family:'DM Mono',monospace;font-size:11px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .admin-user-meta{font-family:'DM Mono',monospace;font-size:10px;color:var(--text2);margin-bottom:10px;}
+  .admin-user-actions{display:flex;gap:8px;flex-wrap:wrap;}
+  .admin-btn-approve{background:var(--success);color:#0a0a0f;border:none;border-radius:6px;padding:7px 14px;font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;flex:1;}
+  .admin-btn-reject{background:none;border:1px solid #f87171;color:#f87171;border-radius:6px;padding:7px 14px;font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;flex:1;}
+  .admin-btn-suspend{background:none;border:1px solid var(--warn);color:var(--warn);border-radius:6px;padding:7px 12px;font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;}
+  .admin-btn-restore{background:none;border:1px solid var(--success);color:var(--success);border-radius:6px;padding:7px 12px;font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;}
+  .admin-btn-delete{background:none;border:1px solid #f87171;color:#f87171;border-radius:6px;padding:7px 12px;font-family:'DM Mono',monospace;font-size:11px;cursor:pointer;}
+  .admin-status-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:10px;padding:2px 8px;border-radius:10px;margin-left:6px;}
+  .badge-pending{background:rgba(232,145,74,.15);color:var(--warn);}
+  .badge-approved{background:rgba(78,201,148,.15);color:var(--success);}
+  .badge-suspended{background:rgba(248,113,113,.15);color:#f87171;}
+  .admin-section-header{display:flex;align-items:center;justify-content:space-between;margin:20px 0 12px;}
+  .admin-section-title{font-family:'DM Mono',monospace;font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:1.5px;}
+  .admin-empty{text-align:center;padding:24px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text2);}
+  #nav-admin-btn{display:none;}
 </style>
 </head>
 <body>
@@ -543,6 +573,32 @@
   </div>
 </div>
 
+<!-- PAGE: ADMIN -->
+<div id="page-admin" class="page">
+  <div class="page-header">
+    <div class="label">管理員</div>
+    <h1>後台管理</h1>
+  </div>
+  <!-- 統計 -->
+  <div class="admin-stats" id="admin-stats">
+    <div class="admin-stat"><div class="admin-stat-num" id="stat-total">—</div><div class="admin-stat-label">總用戶</div></div>
+    <div class="admin-stat"><div class="admin-stat-num warn" id="stat-pending">—</div><div class="admin-stat-label">待審核</div></div>
+    <div class="admin-stat"><div class="admin-stat-num success" id="stat-approved">—</div><div class="admin-stat-label">已核准</div></div>
+    <div class="admin-stat"><div class="admin-stat-num" id="stat-suspended" style="color:#f87171">—</div><div class="admin-stat-label">已停用</div></div>
+  </div>
+  <!-- 待審核 -->
+  <div class="admin-section-header">
+    <div class="admin-section-title">⏳ 待審核</div>
+    <button class="btn-ghost" onclick="renderAdmin()" style="font-size:11px;padding:6px 12px">重新整理</button>
+  </div>
+  <div id="admin-pending-list"><div class="admin-empty">載入中...</div></div>
+  <!-- 全部用戶 -->
+  <div class="admin-section-header" style="margin-top:28px">
+    <div class="admin-section-title">👥 全部用戶</div>
+  </div>
+  <div id="admin-all-list"><div class="admin-empty">載入中...</div></div>
+</div>
+
 <nav>
   <button class="active" onclick="goPage('today',this)">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>今日
@@ -558,6 +614,9 @@
   </button>
   <button onclick="goPage('review',this)">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>復盤
+  </button>
+  <button id="nav-admin-btn" onclick="goPage('admin',this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>後台
   </button>
 </nav>
 
@@ -827,6 +886,103 @@ async function loadFromServer(){
   }catch(e){ console.error('loadFromServer error:',e); return false; }
 }
 
+// ---------- ADMIN ----------
+async function renderAdmin(){
+  if(!currentUser?.is_admin)return;
+  // 載入統計
+  try{
+    const res=await fetch(`${API_BASE}/api/admin/stats`,{credentials:'include'});
+    if(res.ok){
+      const s=await res.json();
+      document.getElementById('stat-total').textContent=s.total;
+      document.getElementById('stat-pending').textContent=s.pending;
+      document.getElementById('stat-approved').textContent=s.approved;
+      document.getElementById('stat-suspended').textContent=s.suspended;
+    }
+  }catch(e){}
+  // 載入待審核
+  try{
+    const res=await fetch(`${API_BASE}/api/admin/users/pending`,{credentials:'include'});
+    const pendingEl=document.getElementById('admin-pending-list');
+    if(res.ok){
+      const users=await res.json();
+      if(!users.length){pendingEl.innerHTML='<div class="admin-empty">🎉 目前沒有待審核用戶</div>';return;}
+      pendingEl.innerHTML=users.map(u=>adminUserCard(u,'pending')).join('');
+    }
+  }catch(e){}
+  // 載入全部用戶
+  try{
+    const res=await fetch(`${API_BASE}/api/admin/users`,{credentials:'include'});
+    const allEl=document.getElementById('admin-all-list');
+    if(res.ok){
+      const users=await res.json();
+      allEl.innerHTML=users.map(u=>adminUserCard(u,'all')).join('');
+    }
+  }catch(e){}
+}
+
+function adminUserCard(u,mode){
+  const av=u.avatar_url
+    ?`<img class="admin-user-avatar" src="${u.avatar_url}" referrerpolicy="no-referrer">`
+    :`<div class="admin-user-avatar-placeholder">👤</div>`;
+  const badge=`<span class="admin-status-badge badge-${u.status}">${{pending:'待審核',approved:'已核准',suspended:'已停用'}[u.status]||u.status}</span>`;
+  const joined=u.created_at?new Date(u.created_at).toLocaleDateString('zh-TW'):'—';
+  const logins=u.login_count||0;
+  let actions='';
+  if(mode==='pending'||u.status==='pending'){
+    actions=`<button class="admin-btn-approve" onclick="adminApprove(${u.id})">✓ 核准</button>
+             <button class="admin-btn-reject" onclick="adminReject(${u.id})">✕ 拒絕</button>`;
+  }else if(u.status==='approved'&&!u.is_admin){
+    actions=`<button class="admin-btn-suspend" onclick="adminSuspend(${u.id})">停用</button>
+             <button class="admin-btn-delete" onclick="adminDeleteUser(${u.id})">刪除</button>`;
+  }else if(u.status==='suspended'){
+    actions=`<button class="admin-btn-restore" onclick="adminRestore(${u.id})">恢復</button>
+             <button class="admin-btn-delete" onclick="adminDeleteUser(${u.id})">刪除</button>`;
+  }else if(u.is_admin){
+    actions=`<span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--accent)">管理員</span>`;
+  }
+  return `<div class="admin-user-item" id="admin-user-${u.id}">
+    <div class="admin-user-top">
+      ${av}
+      <div class="admin-user-info">
+        <div class="admin-user-name">${u.name||''}${badge}</div>
+        <div class="admin-user-email">${u.email||''}</div>
+      </div>
+    </div>
+    <div class="admin-user-meta">加入：${joined}　登入：${logins} 次</div>
+    <div class="admin-user-actions">${actions}</div>
+  </div>`;
+}
+
+async function adminApprove(id){
+  const res=await fetch(`${API_BASE}/api/admin/users/${id}/approve`,{method:'POST',credentials:'include'});
+  if(res.ok){showToast('已核准');renderAdmin();}
+  else showToast('操作失敗');
+}
+async function adminReject(id){
+  if(!confirm('確定拒絕並刪除此用戶？'))return;
+  const res=await fetch(`${API_BASE}/api/admin/users/${id}/reject`,{method:'POST',credentials:'include'});
+  if(res.ok){showToast('已拒絕');renderAdmin();}
+  else showToast('操作失敗');
+}
+async function adminSuspend(id){
+  if(!confirm('確定停用此用戶？'))return;
+  const res=await fetch(`${API_BASE}/api/admin/users/${id}/suspend`,{method:'POST',credentials:'include'});
+  if(res.ok){showToast('已停用');renderAdmin();}
+  else showToast('操作失敗');
+}
+async function adminRestore(id){
+  const res=await fetch(`${API_BASE}/api/admin/users/${id}/restore`,{method:'POST',credentials:'include'});
+  if(res.ok){showToast('已恢復');renderAdmin();}
+  else showToast('操作失敗');
+}
+async function adminDeleteUser(id){
+  if(!confirm('確定永久刪除此用戶及其所有資料？此操作無法還原！'))return;
+  const res=await fetch(`${API_BASE}/api/admin/users/${id}`,{method:'DELETE',credentials:'include'});
+  if(res.ok){showToast('已刪除');renderAdmin();}
+  else showToast('操作失敗');
+}
+
 // ---------- AUTH ----------
 async function checkAuth(){
   try{
@@ -878,6 +1034,10 @@ function showAppScreen(){
   if(!plan.currentWeek)plan.currentWeek=getCurrentWeek();
   updatePlanBtn();
   renderToday();
+  // 管理員才顯示後台按鈕
+  if(currentUser?.is_admin){
+    document.getElementById('nav-admin-btn').style.display='';
+  }
 }
 
 async function doLogout(){
@@ -891,7 +1051,7 @@ function goPage(id,btn){
   document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   btn.classList.add('active');
-  ({today:renderToday,goals:renderGoals,vision:loadVision,review:renderReview,timeblock:renderTimeBlock})[id]?.();
+  ({today:renderToday,goals:renderGoals,vision:loadVision,review:renderReview,timeblock:renderTimeBlock,admin:renderAdmin})[id]?.();
 }
 
 function getCurrentWeek(){
