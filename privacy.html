@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>隱私權政策 | 12週計畫</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9fafb; color: #1a1a1a; line-height: 1.7; }
+    .container { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; }
+    h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; color: #111; }
+    .subtitle { color: #666; margin-bottom: 40px; font-size: 0.95rem; }
+    h2 { font-size: 1.15rem; font-weight: 600; margin: 36px 0 12px; color: #111; border-left: 4px solid #6c63ff; padding-left: 12px; }
+    p, li { font-size: 0.97rem; color: #444; margin-bottom: 10px; }
+    ul { padding-left: 24px; margin-bottom: 10px; }
+    a { color: #6c63ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid #e5e7eb; font-size: 0.88rem; color: #999; }
+    .back { display: inline-block; margin-bottom: 32px; color: #6c63ff; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back">← 返回 12週計畫</a>
+    <h1>隱私權政策</h1>
+    <p class="subtitle">最後更新：2026年5月</p>
+
+    <p>歡迎使用「12週計畫」（以下簡稱「本服務」）。本政策說明我們如何收集、使用及保護您的個人資料。使用本服務即表示您同意本政策。</p>
+
+    <h2>1. 收集的資料</h2>
+    <p>當您使用 Google 帳號登入本服務時，我們會收集以下資料：</p>
+    <ul>
+      <li>您的 Google 帳號電子郵件地址</li>
+      <li>您的顯示名稱</li>
+      <li>您的 Google 帳號大頭貼（頭像圖片）</li>
+      <li>Google 為您的帳號分配的唯一識別碼（Google ID）</li>
+    </ul>
+    <p>此外，本服務也會儲存您在應用程式中建立的計畫內容、目標及進度資料。</p>
+
+    <h2>2. 資料的使用方式</h2>
+    <p>我們僅將您的資料用於以下目的：</p>
+    <ul>
+      <li>識別您的身份並提供個人化的登入體驗</li>
+      <li>儲存與顯示您的 12 週計畫內容</li>
+      <li>讓管理員審核使用者帳號（帳號預設需審核後才能使用）</li>
+    </ul>
+    <p>我們<strong>不會</strong>將您的個人資料出售、租借或分享給任何第三方。</p>
+
+    <h2>3. 資料儲存與安全</h2>
+    <p>您的資料儲存於安全的雲端資料庫（PostgreSQL）。我們採用以下措施保護您的資料：</p>
+    <ul>
+      <li>HTTPS 加密傳輸</li>
+      <li>JWT（JSON Web Token）身份驗證，有效期 30 天</li>
+      <li>HttpOnly Cookie，防止 XSS 攻擊</li>
+      <li>資料庫存取受到嚴格的存取控制</li>
+    </ul>
+
+    <h2>4. Google OAuth 授權</h2>
+    <p>本服務使用 Google OAuth 2.0 進行身份驗證。我們僅請求以下 Google 授權範圍（Scope）：</p>
+    <ul>
+      <li><code>profile</code>：讀取您的基本個人資料（姓名、頭像）</li>
+      <li><code>email</code>：讀取您的電子郵件地址</li>
+    </ul>
+    <p>我們不會讀取您的 Gmail 郵件、Google 雲端硬碟或任何其他 Google 服務的資料。</p>
+
+    <h2>5. Cookie 的使用</h2>
+    <p>本服務使用一個 HttpOnly Cookie（名稱：<code>token</code>）來維持您的登入狀態。此 Cookie：</p>
+    <ul>
+      <li>僅用於身份驗證</li>
+      <li>有效期為 30 天</li>
+      <li>登出後即被清除</li>
+    </ul>
+
+    <h2>6. 資料保留</h2>
+    <p>您的帳號資料將持續保留，直到您要求刪除帳號為止。如需刪除帳號及相關資料，請聯繫我們。</p>
+
+    <h2>7. 您的權利</h2>
+    <p>您有權利：</p>
+    <ul>
+      <li>查詢我們儲存的您的個人資料</li>
+      <li>要求更正不正確的資料</li>
+      <li>要求刪除您的帳號及所有相關資料</li>
+    </ul>
+
+    <h2>8. 聯絡我們</h2>
+    <p>若您對本隱私權政策有任何疑問或要求，請透過電子郵件聯絡我們：</p>
+    <p><a href="mailto:lu6tn6@gmail.com">lu6tn6@gmail.com</a></p>
+
+    <div class="footer">
+      <p>© 2026 12週計畫。保留所有權利。</p>
+    </div>
+  </div>
+</body>
+</html>
