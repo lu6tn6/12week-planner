@@ -848,7 +848,8 @@ async function syncToServer(){
       reviews:plan.reviews||{},
       lifeAreas:(state.lifeAreas||[]).map(a=>({ key:a.key, label:a.label, icon:a.icon })),
       vision:state.vision?{ v10:state.vision.v10||'', v3:state.vision.v3||'', v1:state.vision.v1||'',
-        reward:state.vision.reward||'', dreamImages:state.vision.dreamImages||[] }:null
+        reward:state.vision.reward||'', dreamImages:state.vision.dreamImages||[] }:null,
+      timeBlocks:plan.timeBlocks||{}
     };
     const res=await fetch(`${API_BASE}/api/plans/${srvId}/sync`,{
       method:'POST',credentials:'include',
@@ -896,6 +897,7 @@ async function loadFromServer(){
     localPlan.weekActions=data.weekActions||{};
     localPlan.weekDays=data.weekDays||{};
     localPlan.reviews=data.reviews||{};
+    localPlan.timeBlocks=data.timeBlocks||{};
 
     // 把這個 plan 排在最前，其餘保留
     state.plans=[localPlan, ...state.plans.filter(pp=>pp.id!==localId)];
